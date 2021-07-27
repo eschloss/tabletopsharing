@@ -24,7 +24,7 @@ public class mirror : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         GameObject origObj = other.gameObject;
-        if (origObj.GetComponent<Linked>().isClicked)
+        if (origObj.GetComponent<Linked>().isBeingMoved)
         {
             Debug.Log("Collision Enter");
             GameObject mirroredObj = new GameObject();
@@ -42,13 +42,14 @@ public class mirror : MonoBehaviour
             mirroredObj.name = origObj.name + " Copy";
             mirroredObj.AddComponent<Linked>();
             mirroredObj.GetComponent<Linked>().obj = origObj;
+            mirroredObj.AddComponent<FlickDeceleration>();
 
             origObj.GetComponent<Linked>().obj = mirroredObj;
         }
     }
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.GetComponent<Linked>().isClicked)
+        if (other.gameObject.GetComponent<Linked>().isBeingMoved)
         {
             Linked linked = other.gameObject.GetComponent<Linked>();
             Destroy(linked.obj);

@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 345314940}
   - component: {fileID: 345314941}
   - component: {fileID: 345314942}
+  - component: {fileID: 345314943}
   m_Layer: 0
   m_Name: Blue
   m_TagString: Untagged
@@ -270,6 +271,22 @@ MonoBehaviour:
   obj: {fileID: 0}
   canTrigger: 1
   isClicked: 0
+  isBeingMoved: 0
+--- !u!114 &345314943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 345314937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d169a66b68e378e43bd5903a9a8eff65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocity: {x: 0, y: 0}
+  maxVelocity: 30
+  acceleration: -40
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,8 +397,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 625312098}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.25129083, y: 0.2503192, z: -0.5}
-  m_LocalScale: {x: 0.49745232, y: 0.4994197, z: 1}
+  m_LocalPosition: {x: -0.27405, y: 0.2503192, z: -0.5}
+  m_LocalScale: {x: 0.45193046, y: 0.4994197, z: 1}
   m_Children: []
   m_Father: {fileID: 1629079411}
   m_RootOrder: 3
@@ -533,6 +550,7 @@ GameObject:
   - component: {fileID: 1037983297}
   - component: {fileID: 1037983298}
   - component: {fileID: 1037983299}
+  - component: {fileID: 1037983300}
   m_Layer: 0
   m_Name: Green
   m_TagString: Untagged
@@ -667,6 +685,22 @@ MonoBehaviour:
   obj: {fileID: 0}
   canTrigger: 1
   isClicked: 0
+  isBeingMoved: 0
+--- !u!114 &1037983300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037983294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d169a66b68e378e43bd5903a9a8eff65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocity: {x: 0, y: 0}
+  maxVelocity: 30
+  acceleration: -40
 --- !u!1 &1560582094
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,8 +728,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1560582094}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.25, y: -0.247, z: -0.5}
-  m_LocalScale: {x: 0.49745232, y: 0.4994197, z: 1}
+  m_LocalPosition: {x: 0.27423, y: -0.247, z: -0.5}
+  m_LocalScale: {x: 0.44899052, y: 0.4994197, z: 1}
   m_Children: []
   m_Father: {fileID: 1629079411}
   m_RootOrder: 4
@@ -891,6 +925,7 @@ GameObject:
   - component: {fileID: 1900314565}
   - component: {fileID: 1900314566}
   - component: {fileID: 1900314567}
+  - component: {fileID: 1900314568}
   m_Layer: 0
   m_Name: Red
   m_TagString: Untagged
@@ -1025,3 +1060,19 @@ MonoBehaviour:
   obj: {fileID: 0}
   canTrigger: 1
   isClicked: 0
+  isBeingMoved: 0
+--- !u!114 &1900314568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1900314562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d169a66b68e378e43bd5903a9a8eff65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocity: {x: 0, y: 0}
+  maxVelocity: 30
+  acceleration: -40
