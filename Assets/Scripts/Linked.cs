@@ -17,10 +17,10 @@ public class Linked : MonoBehaviour
     void Start()
     {
         Transform parent = this.gameObject.transform.parent;
-        minX = parent.localPosition.x;
-        minY = parent.localPosition.y;
-        maxX = parent.localScale.x + minX;
-        maxY = parent.localScale.y + minY;
+        minX = parent.position.x - parent.localScale.x/2;
+        minY = parent.position.y - parent.localScale.y/2;
+        maxX = parent.position.x + parent.localScale.x/2;
+        maxY = parent.position.y + parent.localScale.y/2;
     }
 
     // Update is called once per frame
@@ -34,13 +34,13 @@ public class Linked : MonoBehaviour
         isBeingMoved = true;
         
         /*** keep object within bounds of table ***/
-        /* TODO make this work tomorrow
         Transform transform = this.gameObject.transform;
-        if (x + transform.localPosition.x + transform.localScale.x > maxX) x = maxX;
-        if (y + transform.localPosition.y + transform.localScale.y > maxY) y = maxY;
-        if (x + transform.localPosition.x < minX) x = minX;
-        if (y + transform.localPosition.y < minY) y = minY;
-        */
+        if (transform.position.x - transform.parent.localScale.x * transform.localScale.x / 2 + x < minX ||
+            transform.position.x + transform.parent.localScale.x * transform.localScale.x / 2 + x > maxX)
+        { x = 0; }
+        if (transform.position.y - transform.parent.localScale.y * transform.localScale.y / 2 + x < minY ||
+            transform.position.y + transform.parent.localScale.y * transform.localScale.y / 2 + x > maxY)
+        { y = 0; }
         
         this.gameObject.transform.Translate(x, y, 0);
             
@@ -54,5 +54,6 @@ public class Linked : MonoBehaviour
     public void Stop()
     {
         isBeingMoved = false;
+        this.gameObject.GetComponent<FlickDeceleration>().velocity = new Vector2(0,0);
     }
 }

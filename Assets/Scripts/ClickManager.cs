@@ -10,13 +10,11 @@ public class ClickManager : MonoBehaviour
     private Vector2 lastMousePos = new Vector2(0,0);
     private bool flickOn = false;
     private Vector2 flickVelocity = new Vector2(0,0);
-    private bool boundariesOn = false;
     
     // Start is called before the first frame update
     void Start()
     {
         flickOn = Convert.ToBoolean(PlayerPrefs.GetInt("Toggle01"));
-        boundariesOn = Convert.ToBoolean(PlayerPrefs.GetInt("Toggle02"));
         Debug.Log(flickOn);
         //Debug.Log("Boundaries " + boundariesOn);
     }
@@ -32,7 +30,7 @@ public class ClickManager : MonoBehaviour
                 Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
                 RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
-                if (hit.collider != null)
+                if (hit.collider != null && hit.collider.gameObject.GetComponent<Linked>() != null)
                 {
                     Debug.Log(hit.collider.gameObject.name);
                     clickedObj = hit.collider.gameObject;

@@ -8,19 +8,6 @@ public class mirror : MonoBehaviour
     public GameObject inverseMirror;
     public GameObject table;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        Debug.Log("CollisionStart");
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void OnTriggerEnter2D(Collider2D other)
     {
         GameObject origObj = other.gameObject;
