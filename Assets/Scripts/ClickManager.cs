@@ -10,6 +10,7 @@ public class ClickManager : MonoBehaviour
     private Vector2 lastMousePos = new Vector2(0,0);
     private bool flickOn = false;
     private Vector2 flickVelocity = new Vector2(0,0);
+    private const float DOUBLE_CLICK_DELAY = .5f;
     
     // Start is called before the first frame update
     void Start()
@@ -24,8 +25,8 @@ public class ClickManager : MonoBehaviour
     {
         if (clickedObj == null)
         {
-            if (Input.GetMouseButton(0))
-                /*** Click and Drag Onset ***/
+            /*** Click and Drag Onset ***/
+            if (Input.GetMouseButton(0)) 
             {
                 Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
@@ -34,7 +35,20 @@ public class ClickManager : MonoBehaviour
                 {
                     Debug.Log(hit.collider.gameObject.name);
                     clickedObj = hit.collider.gameObject;
-                    clickedObj.GetComponent<Linked>().isClicked = true;
+                    Linked linked = clickedObj.GetComponent<Linked>();
+                    linked.isClicked = true;
+
+                    /*** Double Click Toggle ***/
+                    if (Time.time - linked.lastClick < DOUBLE_CLICK_DELAY)
+                    {
+                        linked.TriggerDoubleClick();
+                        linked.lastClick = 0f;
+                    }
+                    else
+                    {
+                        linked.lastClick = Time.time;
+                    }
+                        
                 }
 
                 lastMousePos = mousePos2D;

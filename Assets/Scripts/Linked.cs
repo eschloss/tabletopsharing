@@ -7,7 +7,9 @@ public class Linked : MonoBehaviour
     public GameObject obj;
     public bool canTrigger = false;
     public bool isClicked = false;
+    public float lastClick = 0f;
     public bool isBeingMoved = false;
+    public bool doubleClickTrigger = false;
     private float maxX;
     private float maxY;
     private float minX;
@@ -55,5 +57,10 @@ public class Linked : MonoBehaviour
     {
         isBeingMoved = false;
         this.gameObject.GetComponent<FlickDeceleration>().velocity = new Vector2(0,0);
+    }
+
+    public void TriggerDoubleClick()
+    {
+        doubleClickTrigger = !doubleClickTrigger;
     }
 }
