@@ -37,12 +37,14 @@ public class Linked : MonoBehaviour
         
         /*** keep object within bounds of table ***/
         Transform transform = this.gameObject.transform;
-        if (transform.position.x - transform.parent.localScale.x * transform.localScale.x / 2 + x < minX ||
-            transform.position.x + transform.parent.localScale.x * transform.localScale.x / 2 + x > maxX)
-        { x = 0; }
-        if (transform.position.y - transform.parent.localScale.y * transform.localScale.y / 2 + x < minY ||
-            transform.position.y + transform.parent.localScale.y * transform.localScale.y / 2 + x > maxY)
-        { y = 0; }
+        if (transform.position.x - transform.parent.localScale.x * transform.localScale.x / 2 + x < minX)
+        { x = .1f; }
+        else if (transform.position.x + transform.parent.localScale.x * transform.localScale.x / 2 + x > maxX)
+        { x = -.1f; }
+        if (transform.position.y - transform.parent.localScale.y * transform.localScale.y / 2 + x < minY)
+        { y = .1f; }
+        else if (transform.position.y + transform.parent.localScale.y * transform.localScale.y / 2 + x > maxY)
+        { y = -.1f; }
         
         this.gameObject.transform.Translate(x, y, 0);
             

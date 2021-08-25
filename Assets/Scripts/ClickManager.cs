@@ -6,19 +6,16 @@ using System;
 
 public class ClickManager : MonoBehaviour
 {
-    private GameObject clickedObj = null;
+    private GameObject clickedObj = null; 
     private Vector2 firstMousePos = new Vector2(0,0);
     private Vector2 lastMousePos = new Vector2(0,0);
     private bool flickOn = false;
-    private Vector2 flickVelocity = new Vector2(0,0);
     private const float DOUBLE_CLICK_DELAY = .5f;
     
     // Start is called before the first frame update
     void Start()
     {
         flickOn = Convert.ToBoolean(PlayerPrefs.GetInt("Toggle01"));
-        Debug.Log(flickOn);
-        //Debug.Log("Boundaries " + boundariesOn);
     }
 
     // Update is called once per frame
@@ -89,7 +86,7 @@ public class ClickManager : MonoBehaviour
                 /*** Flick ***/
                 if (flickOn && clickedObj.GetComponent<FlickDeceleration>() != null)
                 {
-                    flickVelocity = mousePosDiff / Time.deltaTime;
+                    Vector2 flickVelocity = mousePosDiff / Time.deltaTime;
                     if (flickVelocity.x != 0 | flickVelocity.y != 0)
                     {
                         clickedObj.GetComponent<FlickDeceleration>().velocity = flickVelocity;
@@ -104,5 +101,6 @@ public class ClickManager : MonoBehaviour
             }
             lastMousePos = mousePos2D;
         }
+            
     }
 }
