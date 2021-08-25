@@ -18,6 +18,12 @@ public class SceneSelector : MonoBehaviour
             case "Scene03Button":
                 SceneManager.LoadScene("Scene03");
                 break;
+            case "Scene04Button":
+                SceneManager.LoadScene("Scene04");
+                break;
+            case "Scene05Button":
+                SceneManager.LoadScene("Scene05");
+                break;
         }
     }
 }

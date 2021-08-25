@@ -7,6 +7,7 @@ using System;
 public class ClickManager : MonoBehaviour
 {
     private GameObject clickedObj = null;
+    private Vector2 firstMousePos = new Vector2(0,0);
     private Vector2 lastMousePos = new Vector2(0,0);
     private bool flickOn = false;
     private Vector2 flickVelocity = new Vector2(0,0);
@@ -31,26 +32,34 @@ public class ClickManager : MonoBehaviour
                 Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
                 RaycastHit2D hit = Physics2D.Raycast(mousePos2D, Vector2.zero);
-                if (hit.collider != null && hit.collider.gameObject.GetComponent<Linked>() != null)
-                {
-                    Debug.Log(hit.collider.gameObject.name);
-                    clickedObj = hit.collider.gameObject;
-                    Linked linked = clickedObj.GetComponent<Linked>();
-                    linked.isClicked = true;
+                if (hit.collider != null) {
+                    /*** decals ***/
+                    if (hit.collider.gameObject.GetComponent<Linked>() != null)
+                    {
+                        Debug.Log(hit.collider.gameObject.name);
+                        clickedObj = hit.collider.gameObject;
+                        Linked linked = clickedObj.GetComponent<Linked>();
+                        linked.isClicked = true;
 
-                    /*** Double Click Toggle ***/
-                    if (Time.time - linked.lastClick < DOUBLE_CLICK_DELAY)
+                        /*** Double Click Toggle ***/
+                        if (Time.time - linked.lastClick < DOUBLE_CLICK_DELAY)
+                        {
+                            linked.TriggerDoubleClick();
+                            linked.lastClick = 0f;
+                        }
+                        else
+                        {
+                            linked.lastClick = Time.time;
+                        }
+                    /*** Lazy Susan ***/
+                    } else if (hit.collider.gameObject.GetComponent<LazySusan>() != null)
                     {
-                        linked.TriggerDoubleClick();
-                        linked.lastClick = 0f;
+                        Debug.Log(hit.collider.gameObject.name);
+                        clickedObj = hit.collider.gameObject;
                     }
-                    else
-                    {
-                        linked.lastClick = Time.time;
-                    }
-                        
                 }
 
+                firstMousePos = mousePos2D;
                 lastMousePos = mousePos2D;
             }
         }
@@ -58,18 +67,27 @@ public class ClickManager : MonoBehaviour
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 mousePos2D = new Vector2(mousePos.x, mousePos.y);
+            Vector2 totalMousePosDiff = mousePos2D - firstMousePos;
             Vector2 mousePosDiff = mousePos2D - lastMousePos;
             
             if (Input.GetMouseButton(0))
             /*** Click and Drag Continue ***/
             {
-                clickedObj.GetComponent<Linked>().Translate(mousePosDiff.x, mousePosDiff.y);
-                lastMousePos = mousePos2D;
+                /*** decals ***/
+                if (clickedObj.GetComponent<Linked>() != null)
+                {
+                    clickedObj.GetComponent<Linked>().Translate(totalMousePosDiff.x, totalMousePosDiff.y);
+                    firstMousePos = mousePos2D;
+                /*** Lazy Susan ***/
+                } else if (clickedObj.GetComponent<LazySusan>() != null)
+                {
+                    clickedObj.GetComponent<LazySusan>().Rotate(mousePos2D, lastMousePos);
+                }
             }
             else
             {
                 /*** Flick ***/
-                if (flickOn)
+                if (flickOn && clickedObj.GetComponent<FlickDeceleration>() != null)
                 {
                     flickVelocity = mousePosDiff / Time.deltaTime;
                     if (flickVelocity.x != 0 | flickVelocity.y != 0)
@@ -77,10 +95,14 @@ public class ClickManager : MonoBehaviour
                         clickedObj.GetComponent<FlickDeceleration>().velocity = flickVelocity;
                     }
                 }
-                
-                clickedObj.GetComponent<Linked>().isClicked = false;
+
+                if (clickedObj.GetComponent<Linked>() != null)
+                {
+                    clickedObj.GetComponent<Linked>().isClicked = false;
+                }
                 clickedObj = null;
             }
+            lastMousePos = mousePos2D;
         }
     }
 }

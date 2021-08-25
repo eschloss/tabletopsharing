@@ -50,7 +50,29 @@ public class Linked : MonoBehaviour
         {
             obj.GetComponent<Linked>().isBeingMoved = false;
             obj.transform.Translate(-x, -y, 0);
+		
+            /* search for bumped object */
+			/*
+            GameObject highlight1 = obj.transform.Find("highlight").gameObject;
+            if (highlight1 != null) {
+                if (highlight1.GetComponent<bump>() != null && highlight1.GetComponent<bump>().bumpedObj != null) {
+                    GameObject bumpedObj1 = highlight1.GetComponent<bump>().bumpedObj; 
+                    bumpedObj1.transform.Translate(-x * 1.5f, -y * 1.5f, 0);
+                }	
+            }
+			*/
         }
+
+		/* search for bumped object */
+		/*
+		GameObject highlight = this.transform.Find("highlight").gameObject;
+		if (highlight != null) {
+			if (highlight.GetComponent<bump>() != null && highlight.GetComponent<bump>().bumpedObj != null) {
+				GameObject bumpedObj = highlight.GetComponent<bump>().bumpedObj; 
+				bumpedObj.transform.Translate(x * 1.5f, y * 1.5f, 0);
+			}	
+		}
+		*/
     }
 
     public void Stop()
