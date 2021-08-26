@@ -8,6 +8,7 @@ public class DistributedMirror : MonoBehaviour
     public GameObject inverseMirror;
     public GameObject table;
     List <GameObject> currentCollisions = new List <GameObject> ();
+	public GameObject decalPrefab;
 
     void Update()
     {
@@ -46,38 +47,24 @@ public class DistributedMirror : MonoBehaviour
     void Mirror(GameObject origObj) {
         if (origObj.GetComponent<Linked>().isBeingMoved)
         {
-            GameObject mirroredObj = new GameObject();
+            var mirroredObj = Instantiate(decalPrefab);
             mirroredObj.transform.parent = table.transform;
-            mirroredObj.AddComponent<Rigidbody2D>();
-            mirroredObj.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
-            mirroredObj.AddComponent<BoxCollider2D>();
-            mirroredObj.transform.localPosition = new Vector3(-origObj.transform.localPosition.x,
-                -origObj.transform.localPosition.y, origObj.transform.localPosition.z); 
-            mirroredObj.transform.localScale = origObj.transform.localScale;
-            mirroredObj.AddComponent<SpriteRenderer>();
             SpriteRenderer mo_spriteRenderer = mirroredObj.GetComponent<SpriteRenderer>();
             mo_spriteRenderer.color = origObj.GetComponent<SpriteRenderer>().color;
             mo_spriteRenderer.sprite = origObj.GetComponent<SpriteRenderer>().sprite;
-            mirroredObj.name = origObj.name + " Copy";
-            mirroredObj.AddComponent<Linked>();
-            mirroredObj.GetComponent<Linked>().obj = origObj;
-            mirroredObj.AddComponent<FlickDeceleration>();
+            mo_spriteRenderer.drawMode = origObj.GetComponent<SpriteRenderer>().drawMode;
             mirroredObj.GetComponent<Linked>().doubleClickTrigger = true;
-
-            /***Highlight copy ***/
+            mirroredObj.name = origObj.name;
+            mirroredObj.transform.localPosition = new Vector3(-origObj.transform.localPosition.x,
+                -origObj.transform.localPosition.y, origObj.transform.localPosition.z); 
+            mirroredObj.transform.localScale = origObj.transform.localScale;
+            
             GameObject origHighlight = origObj.transform.Find("highlight").gameObject;
             origHighlight.SetActive(true);
-            GameObject mirroredHighlight = new GameObject();
-            mirroredHighlight.transform.parent = mirroredObj.transform;
-            mirroredHighlight.transform.localPosition = new Vector3(origHighlight.transform.localPosition.x,
-                origHighlight.transform.localPosition.y, origHighlight.transform.localPosition.z); 
-            mirroredHighlight.transform.localScale = origHighlight.transform.localScale;
-            mirroredHighlight.AddComponent<SpriteRenderer>();
-            SpriteRenderer mh_spriteRenderer = mirroredHighlight.GetComponent<SpriteRenderer>();
-            mh_spriteRenderer.color = origHighlight.GetComponent<SpriteRenderer>().color;
-            mh_spriteRenderer.sprite = origHighlight.GetComponent<SpriteRenderer>().sprite;
-            mirroredHighlight.name = "highlight";
-
+            GameObject newHighlight = mirroredObj.transform.Find("highlight").gameObject;
+            newHighlight.SetActive(true);
+            
+            mirroredObj.GetComponent<Linked>().obj = origObj;
             origObj.GetComponent<Linked>().obj = mirroredObj;
         }
     }
