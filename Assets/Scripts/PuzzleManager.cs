@@ -11,6 +11,7 @@ public class PuzzleManager : MonoBehaviour
 	public Vector2[] startingContainersMin;
 	public Vector2[] startingContainersMax;
 	public GameObject[] currentPieces;
+	public float LEEWAY = .02f;
     
     // Start is called before the first frame update
     void Start()
@@ -71,7 +72,7 @@ public class PuzzleManager : MonoBehaviour
                         correctDiffY = currentPiece.transform.localScale.y;
                     }
         
-                    if (Mathf.Abs(diff.x - correctDiffX) > .02f || Mathf.Abs(-diff.y - correctDiffY) > .02f) {
+                    if (Mathf.Abs(diff.x - correctDiffX) > LEEWAY || Mathf.Abs(-diff.y - correctDiffY) > LEEWAY) {
                         success = false;
                         break;
                     }				
@@ -81,12 +82,15 @@ public class PuzzleManager : MonoBehaviour
             if (success) {
                 Debug.Log("Success");
                 /* Move onto the next puzzle.
-				 * Log how many times a puzzle piece was shared btwn users
-				 * Also, log the times between one user first touching a piece and the time the 
+				 * TODO Log how many times a puzzle piece was shared btwn users
+				 * TODO log the times between one user first touching a piece and the time the 
 				 * next user first takes the piece.
 				 */
 				
 				foreach(GameObject obj in currentPieces) {
+                    if (obj.GetComponent<Linked>().obj != null) {
+                    	Destroy(obj.GetComponent<Linked>().obj);
+					}
 					Destroy(obj);
 				}
 
