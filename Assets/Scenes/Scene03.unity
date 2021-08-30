@@ -596,12 +596,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   puzzles:
   - {fileID: 1518582317504402408, guid: b5d4de32ee43764458173cc827ef7e0f, type: 3}
+  - {fileID: 1518582317504402408, guid: b5d4de32ee43764458173cc827ef7e0f, type: 3}
+  - {fileID: 1518582317504402408, guid: b5d4de32ee43764458173cc827ef7e0f, type: 3}
   decalPrefab: {fileID: 3190038704894075463, guid: fbc092e763d050f4ebf9824100c3fbc4, type: 3}
   table: {fileID: 1629079409}
+  currentPuzzle: 0
   startingContainersMin:
   - {x: -0.44, y: -0.44}
   startingContainersMax:
   - {x: 0.44, y: 0.44}
+  currentPieces: []
+  LEEWAY: 0.02
 --- !u!4 &937218075
 Transform:
   m_ObjectHideFlags: 0
